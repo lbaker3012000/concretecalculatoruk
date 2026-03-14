@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concrete Calculator UK — Ballast, Cement &amp; Materials Estimator</title>
+  <meta name="description" content="Free UK concrete calculator. Enter your dimensions and instantly get ballast tonbag quantities, 20kg bag counts, cement bags and estimated costs at current builders merchant prices. Supports metres, feet and inches." />
+  <meta name="keywords" content="concrete calculator uk, ballast calculator, cement calculator, how much concrete, tonbag calculator, shed base calculator, concrete mix calculator, builders merchant" />
+  <meta name="author" content="Concrete Calculator UK" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://concretecalculatoruk.co.uk/" />
+  <meta name="google-site-verification" content="dEBt79Z4BAWbePTmTkWl-QEH19fDqJiGEkiL18g5TCI" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3535876302289611" crossorigin="anonymous"></script>
+
+  <!-- Open Graph (social sharing) -->
+  <meta property="og:title" content="Concrete Calculator UK — Ballast, Cement &amp; Materials Estimator" />
+  <meta property="og:description" content="Free UK concrete calculator. Get instant ballast tonbag quantities, cement bags and cost estimates at current UK builders merchant prices." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://concretecalculatoruk.co.uk/" />
+  <meta property="og:image" content="/favicon-192.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Concrete Calculator UK — Ballast &amp; Cement Estimator" />
+  <meta name="twitter:description" content="Free UK concrete calculator. Instant ballast tonbag quantities, cement bags and cost estimates at current builders merchant prices." />
+  <meta name="twitter:image" content="/favicon-192.png" />
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --yellow: #F5C518;
+      --yellow-dark: #C49D0E;
+      --black: #0e0e0e;
+      --dark: #1a1a1a;
+      --card: #222;
+      --border: #333;
+      --text: #f0f0f0;
+      --muted: #888;
+      --cement: #b0a898;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    header {
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      border-left: 4px solid var(--yellow);
+      padding-left: 1.25rem;
+    }
+
+    header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--yellow);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .container { max-width: 700px; margin: 0 auto; }
+
+    /* Mix selector */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 10px;
+    }
+
+    .mix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .mix-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      color: var(--text);
+    }
+
+    .mix-btn:hover { border-color: var(--yellow); }
+
+    .mix-btn.active {
+      border-color: var(--yellow);
+      background: #2a2500;
+    }
+
+    .mix-btn .mix-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 1px;
+      color: var(--yellow);
+      line-height: 1.1;
+    }
+
+    .mix-btn .mix-ratio {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .mix-btn .mix-use {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--cement);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .custom-ratio-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .custom-ratio-box.visible { display: block; }
+
+    .custom-ratio-box .cr-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .custom-ratio-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .custom-ratio-row label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      min-width: 60px;
+    }
+
+    .custom-ratio-row input[type=range] {
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .custom-ratio-row .cr-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--yellow);
+      min-width: 28px;
+      text-align: right;
+    }
+
+    .cr-preview {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--cement);
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Inputs */
+    .inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--cement);
+      margin-bottom: 6px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 12px 44px 12px 14px;
+      outline: none;
+      transition: border-color 0.15s;
+      -moz-appearance: textfield;
+    }
+
+    .input-wrap input::-webkit-outer-spin-button,
+    .input-wrap input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .input-wrap input:focus { border-color: var(--yellow); }
+
+    .input-wrap .unit {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .unit-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+
+    .unit-toggle span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .toggle-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    .toggle-btn.active {
+      background: var(--yellow);
+      color: var(--black);
+      border-color: var(--yellow);
+      font-weight: 500;
+    }
+
+    /* Results */
+    .results {
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .results.visible { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .volume-banner {
+      background: var(--yellow);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .volume-banner .vol-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #7a6200;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .volume-banner .vol-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--black);
+      line-height: 1;
+    }
+
+    .volume-banner .vol-unit {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #5a4800;
+    }
+
+    .volume-banner .vol-extra {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .volume-banner .vol-extra span {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #5a4800;
+    }
+
+    .volume-banner .vol-extra strong {
+      font-size: 15px;
+      color: var(--black);
+    }
+
+    .materials-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      color: var(--cement);
+      margin-bottom: 1rem;
+    }
+
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .mat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem 1rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 8px;
+      height: 100%;
+    }
+
+    .mat-card.cement::before { background: #aaa; }
+    .mat-card.ballast::before { background: #8B7355; }
+    .mat-card.sand::before { background: #C8A96E; }
+    .mat-card.aggregate::before { background: #6B8E6B; }
+    .mat-card.water::before { background: #4a9eff; }
+
+    .mat-card .mat-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .mat-card .mat-primary {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .mat-card .mat-primary span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .mat-card .mat-secondary {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .mat-card .mat-note {
+      font-size: 11px;
+      color: #555;
+      margin-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Waste note */
+    .waste-note {
+      background: #1e1a00;
+      border: 1px solid #3a3000;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #998800;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Mix breakdown */
+    .breakdown {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .breakdown h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .ratio-bar {
+      display: flex;
+      height: 28px;
+      border-radius: 4px;
+      overflow: hidden;
+      gap: 2px;
+      margin-bottom: 10px;
+    }
+
+    .ratio-bar div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      transition: flex 0.4s ease;
+    }
+
+    .bar-cement { background: #888; color: #000; }
+    .bar-sand { background: #C8A96E; color: #000; }
+    .bar-aggregate { background: #6B8E6B; color: #000; }
+    .bar-ballast { background: #8B7355; color: #fff; }
+
+    .ratio-legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ratio-legend span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ratio-legend span::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .leg-cement::before { background: #888; }
+    .leg-sand::before { background: #C8A96E; }
+    .leg-agg::before { background: #6B8E6B; }
+    .leg-ballast::before { background: #8B7355; }
+
+    /* Calc button */
+    .calc-btn {
+      width: 100%;
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      border-radius: 6px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      padding: 14px;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .calc-btn:hover { background: var(--yellow-dark); }
+    .calc-btn:active { transform: scale(0.99); }
+
+    /* Disclaimer */
+    .disclaimer {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #444;
+      line-height: 1.6;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+
+    .price-section {
+      margin-bottom: 2rem;
+    }
+
+    .price-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .price-total-box {
+      background: #1a2a1a;
+      border: 1px solid #2a4a2a;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .price-total-box .pt-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #4a8a4a;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .price-total-box .pt-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: #7aba7a;
+      line-height: 1;
+    }
+
+    .price-total-box .pt-unit {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #4a7a4a;
+    }
+
+    .price-total-box .pt-range {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .price-total-box .pt-range span {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #4a7a4a;
+    }
+
+    .price-total-box .pt-range strong {
+      font-size: 14px;
+      color: #7aba7a;
+    }
+
+    .price-rows {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      padding: 12px 1.25rem;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+
+    .price-row:last-child { border-bottom: none; }
+
+    .price-row .pr-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .pr-dot.cement { background: #888; }
+    .pr-dot.ballast { background: #8B7355; }
+
+    .price-row .pr-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .price-row .pr-qty {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      min-width: 120px;
+      text-align: right;
+    }
+
+    .price-row .pr-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: #7aba7a;
+      min-width: 80px;
+      text-align: right;
+    }
+
+    .price-note {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-note a {
+      color: #555;
+    }
+
+    /* Cookie consent banner */
+    #cookieBanner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #111;
+      border-top: 2px solid var(--yellow);
+      padding: 1.25rem 1.5rem;
+      z-index: 9999;
+      display: none;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    #cookieBanner.visible { display: block; }
+
+    .cookie-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cookie-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--yellow);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .cookie-text {
+      font-size: 13px;
+      color: #999;
+      line-height: 1.7;
+    }
+
+    .cookie-text a {
+      color: var(--yellow);
+      text-decoration: none;
+    }
+
+    .cookie-toggles {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cookie-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 10px 14px;
+      gap: 12px;
+    }
+
+    .cookie-toggle-info { flex: 1; }
+
+    .cookie-toggle-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .cookie-toggle-desc {
+      font-size: 11px;
+      color: #555;
+      margin-top: 2px;
+    }
+
+    .cookie-required {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: #444;
+      white-space: nowrap;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #333;
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      left: 3px; top: 3px;
+      background: #666;
+      border-radius: 50%;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .toggle-switch input:checked + .toggle-slider { background: #2a3a00; }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); background: var(--yellow); }
+    .toggle-switch input:disabled + .toggle-slider { cursor: not-allowed; }
+
+    .cookie-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cookie-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .cookie-btn-accept {
+      background: var(--yellow);
+      color: #000;
+      border-color: var(--yellow);
+      font-weight: 500;
+    }
+
+    .cookie-btn-accept:hover { background: var(--yellow-dark); border-color: var(--yellow-dark); }
+
+    .cookie-btn-save {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .cookie-btn-save:hover { border-color: var(--yellow); color: var(--yellow); }
+
+    .cookie-btn-reject {
+      background: transparent;
+      color: #555;
+    }
+
+    .cookie-btn-reject:hover { color: #999; border-color: #444; }
+
+    #cookieSettingsLink {
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: #333;
+      cursor: pointer;
+      z-index: 9998;
+      display: none;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 4px 8px;
+      text-decoration: none;
+    }
+
+    #cookieSettingsLink:hover { color: var(--yellow); border-color: var(--yellow); }
+    #cookieSettingsLink.visible { display: block; }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .faq-question:hover { color: var(--yellow); }
+    .faq-chevron {
+      font-size: 18px;
+      color: var(--muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--yellow); }
+    .faq-answer {
+      display: none;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14px;
+      color: #999;
+      line-height: 1.8;
+      padding-bottom: 1rem;
+    }
+    .faq-item.open .faq-answer { display: block; }
+
+    @media (max-width: 600px) {
+      .cookie-btns { flex-direction: column; }
+      .cookie-btn { text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .inputs-grid { grid-template-columns: 1fr; }
+      .volume-banner { flex-direction: column; }
+      .volume-banner .vol-extra { margin-left: 0; text-align: left; }
+      .price-row .pr-qty { display: none; }
+      .price-total-box .pt-range { margin-left: 0; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cookie Consent Banner -->
+<div id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <div class="cookie-inner">
+    <div>
+      <div class="cookie-title">🍪 This site uses cookies</div>
+      <p class="cookie-text">
+        We use cookies to analyse site traffic and serve relevant adverts. Strictly necessary cookies keep the calculator working and cannot be disabled. You can choose which optional cookies to accept below. For more information see our <a href="/privacy-policy">Privacy Policy</a>.
+      </p>
+    </div>
+    <div class="cookie-toggles">
+      <div class="cookie-toggle-row">
+        <div class="cookie-toggle-info">
+          <div class="cookie-toggle-name">Strictly Necessary</div>
+          <div class="cookie-toggle-desc">Required for the calculator to function. Cannot be disabled.</div>
+        </div>
+        <span class="cookie-required">Always on</span>
+      </div>
+      <div class="cookie-toggle-row">
+        <div class="cookie-toggle-info">
+          <div class="cookie-toggle-name">Analytics</div>
+          <div class="cookie-toggle-desc">Google Analytics — helps us understand how visitors use the site.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleAnalytics" checked />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="cookie-toggle-row">
+        <div class="cookie-toggle-info">
+          <div class="cookie-toggle-name">Advertising</div>
+          <div class="cookie-toggle-desc">Google AdSense — allows us to show relevant adverts to support this free tool.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleAds" checked />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="cookie-btns">
+      <button class="cookie-btn cookie-btn-accept" onclick="cookieAcceptAll()">Accept All</button>
+      <button class="cookie-btn cookie-btn-save" onclick="cookieSavePrefs()">Save My Preferences</button>
+      <button class="cookie-btn cookie-btn-reject" onclick="cookieRejectAll()">Reject Optional</button>
+    </div>
+  </div>
+</div>
+
+<!-- Cookie settings link shown after consent -->
+<a id="cookieSettingsLink" onclick="cookieShowBanner()" href="javascript:void(0)">Cookie settings</a>
+
+<div class="container">
+
+  <header>
+    <h1>Concrete Calculator</h1>
+    <p>// volume · materials · bag counts</p>
+  </header>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:2rem;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:var(--muted);line-height:1.8;">
+    <p style="margin-bottom:0.75rem;color:var(--text);font-weight:500;">Free UK Concrete Calculator — Ballast, Cement &amp; Materials Estimator</p>
+    <p>Whether you're laying a path, pouring a shed base, or setting foundations, this free calculator works out exactly how much concrete you need and breaks it down into real materials you can order from your local builders merchant. Enter your dimensions, choose your mix ratio, and get instant quantities for ballast tonbags, 20kg bags, and 25kg cement bags — including estimated costs at current UK market rates.</p>
+    <p style="margin-top:0.75rem;">Supports metric (metres, millimetres) and imperial (feet, inches) measurements. Adjustable waste allowance. VAT toggle for trade and retail pricing. All mixes shown as cement:ballast ratios as sold by UK builders merchants.</p>
+  </div>
+  <div class="section-label">01 — Select mix type</div>
+  <div class="mix-grid" id="mixGrid">
+    <div class="mix-btn active" data-mix="general" onclick="selectMix(this)">
+      <div class="mix-name">1:6</div>
+      <div class="mix-ratio">C20 General</div>
+      <div class="mix-use">Paths · Shed Bases</div>
+    </div>
+    <div class="mix-btn" data-mix="structural" onclick="selectMix(this)">
+      <div class="mix-name">1:4</div>
+      <div class="mix-ratio">C25 Structural</div>
+      <div class="mix-use">Foundations</div>
+    </div>
+    <div class="mix-btn" data-mix="ballast" onclick="selectMix(this)">
+      <div class="mix-name">1:5</div>
+      <div class="mix-ratio">Ballast Mix</div>
+      <div class="mix-use">Slabs · Driveways</div>
+    </div>
+    <div class="mix-btn" data-mix="lean" onclick="selectMix(this)">
+      <div class="mix-name">1:9</div>
+      <div class="mix-ratio">C10 Lean</div>
+      <div class="mix-use">Fill</div>
+    </div>
+    <div class="mix-btn" data-mix="custom" onclick="selectMix(this)">
+      <div class="mix-name" style="font-size:16px;letter-spacing:0">Custom</div>
+      <div class="mix-ratio">Set your own ratio</div>
+      <div class="mix-use">Any application</div>
+    </div>
+  </div>
+
+  <!-- Custom ratio controls -->
+  <div class="custom-ratio-box" id="customRatioBox">
+    <div class="cr-label">Set custom cement : ballast ratio</div>
+    <div class="custom-ratio-row">
+      <label>Cement</label>
+      <span class="cr-val">1</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted)">:</span>
+      <label>Ballast</label>
+      <input type="range" id="customBallast" min="2" max="12" step="0.5" value="6" oninput="updateCustomRatio()" />
+      <span class="cr-val" id="customBallastVal">6</span>
+    </div>
+    <div class="cr-preview" id="crPreview">Mix: 1 : 6 ballast — approx C20 strength</div>
+  </div>
+
+  <!-- Unit toggle -->
+  <div class="unit-toggle">
+    <span>UNITS —</span>
+    <button class="toggle-btn active" onclick="setUnit('m', this)">Metres</button>
+    <button class="toggle-btn" onclick="setUnit('mm', this)">Millimetres</button>
+    <button class="toggle-btn" onclick="setUnit('ft', this)">Feet</button>
+    <button class="toggle-btn" onclick="setUnit('in', this)">Inches</button>
+  </div>
+
+  <!-- Dimension inputs — multiple pours -->
+  <div class="section-label">02 — Enter dimensions</div>
+  <div id="poursContainer"></div>
+  <button onclick="addPour()"
+    style="width:100%;background:transparent;border:1px dashed var(--border);border-radius:6px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;padding:10px;cursor:pointer;margin-bottom:1.5rem;transition:all 0.15s;"
+    onmouseover="this.style.borderColor='var(--yellow)';this.style.color='var(--yellow)'"
+    onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+    + Add another pour
+  </button>
+
+  <!-- Waste allowance -->
+  <div class="section-label" style="margin-bottom:8px;">03 — Waste allowance</div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:1.5rem;">
+    <div class="custom-ratio-row">
+      <label style="min-width:50px;">Waste</label>
+      <input type="range" id="wasteSlider" min="0" max="25" step="1" value="5" oninput="updateWaste()" />
+      <span class="cr-val" id="wasteVal">5</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)">%</span>
+    </div>
+    <div class="cr-preview" id="wasteHint">5% — typical for small straightforward pours</div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">Calculate Materials</button>
+
+  <!-- Results -->
+  <div class="results" id="results">
+
+    <div class="volume-banner">
+      <div>
+        <div class="vol-label" id="volLabel">Total Volume</div>
+        <div class="vol-num" id="volNum">0.00</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:2px;">
+          <span class="vol-unit">m³</span>
+          <span class="vol-unit" id="volExtra" style="color:#7a6200"></span>
+        </div>
+      </div>
+      <div class="vol-extra">
+        <span>With <span id="wastePct">5</span>% waste</span>
+        <strong id="volWaste">0.00 m³</strong>
+        <span style="margin-top:4px">Mix type</span>
+        <strong id="volMix">C20 General</strong>
+      </div>
+    </div>
+
+    <!-- Per-pour breakdown (shown when >1 pour) -->
+    <div id="pourBreakdown" style="display:none;margin-bottom:1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--border);">Pour breakdown</div>
+      <div id="pourBreakdownRows"></div>
+    </div>
+
+    <div class="materials-label">Materials Required</div>
+    <div class="waste-note" id="wasteNote">
+      ⚠ Quantities include a <span id="wasteNotePct">5</span>% waste allowance. Always order a little extra for small top-ups.
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:1rem;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);">
+      ℹ 1 tonbag (~850kg) = <strong style="color:var(--cement);">43 × 20kg bags</strong>
+    </div>
+
+    <div class="materials-grid" id="materialsGrid">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="price-section" id="priceSection">
+      <div class="materials-label" style="color:#7aba7a;">Estimated Cost</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;">PRICES —</span>
+        <button class="toggle-btn" id="vatExBtn" onclick="setVat('ex', this)">Ex. VAT</button>
+        <button class="toggle-btn active" id="vatIncBtn" onclick="setVat('inc', this)">Inc. VAT</button>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);" id="vatNote">VAT @ 20%</span>
+      </div>
+      <div class="price-total-box">
+        <div>
+          <div class="pt-label">Total Materials Est.</div>
+          <div class="pt-num" id="ptNum">£0</div>
+          <span class="pt-unit" id="vatLabel">inc. VAT</span>
+        </div>
+        <div class="pt-range">
+          <span>Low estimate</span>
+          <strong id="ptLow">£0</strong>
+          <span style="margin-top:4px">High estimate</span>
+          <strong id="ptHigh">£0</strong>
+        </div>
+      </div>
+      <div class="price-rows" id="priceRows"></div>
+      <div class="price-note">
+        // Prices based on typical UK builders merchant rates (March 2026):<br>
+        Cement £6.50–£8.00 per 25kg bag · Ballast tonbag £45–£65 · Ballast 20kg bags £3.00–£4.50 · all <span id="priceNoteVat">inc. VAT @ 20%</span>.<br>
+        Prices vary by region, supplier, and trade account. Always get a quote before ordering.
+      </div>
+      <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:6px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a7aaa;line-height:1.6;">
+        🚚 Delivery costs are not included. Delivery charges vary depending on your location, order quantity, and supplier — typically £15–£35 for small orders, and free or included above merchant minimum thresholds. Always confirm delivery costs when requesting a quote.
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      // These quantities are estimates based on standard mix ratios and typical material densities.
+      Actual requirements may vary based on aggregate grading, moisture content, and site conditions.
+      Always consult a structural engineer for load-bearing or foundation work.
+    </div>
+
+    <!-- Share / Copy results -->
+    <div style="display:flex;gap:8px;margin-top:1.5rem;margin-bottom:2rem;flex-wrap:wrap;">
+      <button id="copyBtn" onclick="copyResults()"
+        style="flex:1;min-width:140px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;padding:12px 16px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;">
+        📋 Copy Results
+      </button>
+      <button id="whatsappBtn" onclick="shareWhatsApp()"
+        style="flex:1;min-width:140px;background:#1a2e1a;border:1px solid #2a4a2a;border-radius:6px;color:#7aba7a;font-family:'JetBrains Mono',monospace;font-size:12px;padding:12px 16px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;">
+        💬 Share via WhatsApp
+      </button>
+      <button id="shareBtn" onclick="shareNative()"
+        style="flex:1;min-width:140px;background:#1a1a2e;border:1px solid #2a2a4a;border-radius:6px;color:#7a7aff;font-family:'JetBrains Mono',monospace;font-size:12px;padding:12px 16px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;">
+        ↗ Share
+      </button>
+    </div>
+    <div id="copyConfirm" style="display:none;font-family:'JetBrains Mono',monospace;font-size:12px;color:#7aba7a;margin-top:-1rem;margin-bottom:1.5rem;padding:8px 12px;background:#1a2e1a;border:1px solid #2a4a2a;border-radius:6px;">
+      ✓ Results copied to clipboard — paste into WhatsApp, email or notes
+    </div>
+    <div style="margin-top:2.5rem;">
+      <div class="materials-label" style="color:#4a9eff;">Find Local Suppliers</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:1rem;">
+        Enter your postcode to find builders merchants who deliver tonbags and cement pallets to your area.
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;">
+        <div style="position:relative;flex:1;min-width:180px;">
+          <input type="text" id="postcodeInput" placeholder="e.g. CT6 5AB" maxlength="8"
+            style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500;padding:12px 14px;outline:none;text-transform:uppercase;"
+            oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')findSuppliers()" />
+        </div>
+        <button onclick="findSuppliers()"
+          style="background:#4a9eff;color:#000;border:none;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;padding:12px 24px;cursor:pointer;transition:background 0.15s;white-space:nowrap;"
+          onmouseover="this.style.background='#3a8eef'" onmouseout="this.style.background='#4a9eff'">
+          Find Suppliers
+        </button>
+      </div>
+
+      <div id="supplierResults" style="display:none;">
+
+        <!-- Nationwide suppliers -->
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4a9eff;margin-bottom:10px;">Nationwide Online Delivery</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem;" id="nationwideCards"></div>
+
+        <!-- Branch-based suppliers -->
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4a9eff;margin-bottom:10px;">Branch-Based Merchants — Check Local Availability</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem;" id="branchCards"></div>
+
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#444;line-height:1.7;border-top:1px solid var(--border);padding-top:1rem;">
+          // Supplier information correct as of March 2026. Stock availability and delivery coverage varies by branch and postcode.
+          Always confirm availability and delivery costs directly with the supplier before ordering.
+          Links open the supplier's own website where you can enter your postcode to check local delivery.
+        </div>
+      </div>
+
+      <div id="postcodeError" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#ff6b6b;padding:10px 0;">
+        Please enter a valid UK postcode (e.g. CT6 5AB or CT65AB).
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div style="margin-top:2.5rem;margin-bottom:2.5rem;">
+      <div class="materials-label" style="color:var(--cement);">Frequently Asked Questions</div>
+      <div id="faqList"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  const nationwideSuppliers = [
+    {
+      name: 'Travis Perkins',
+      desc: 'UK\'s largest builders merchant. Branch delivery nationwide, click & collect available.',
+      stocks: ['Tonbags', 'Cement pallets'],
+      delivery: 'Branch-based delivery · Free above threshold',
+      ballastUrl: 'https://www.travisperkins.co.uk/product/building-materials/aggregates/bagged-aggregates/c/1500050/',
+      cementUrl: 'https://www.travisperkins.co.uk/product/building-materials/cements/cement/c/1500040/',
+      branchUrl: 'https://www.travisperkins.co.uk/branch-locator',
+      color: '#185FA5',
+      nationwide: false
+    },
+    {
+      name: 'Jewsons',
+      desc: 'Major national merchant with extensive branch network. Online ordering with local delivery.',
+      stocks: ['Tonbags', 'Cement pallets'],
+      delivery: 'Branch delivery · Check local branch',
+      ballastUrl: 'https://www.jewson.co.uk/p/jewson-all-in-ballast-large-bulk-bag-AGSTB004',
+      cementUrl: 'https://www.jewson.co.uk/building-materials/aggregate-gravel-cement/cement',
+      branchUrl: 'https://www.jewson.co.uk/branch-finder',
+      color: '#cc3300',
+      nationwide: false
+    },
+    {
+      name: 'Huws Gray',
+      desc: 'Large national merchant, strong in Wales, Midlands & North. Postcode stock checker on site.',
+      stocks: ['Tonbags', 'Cement pallets'],
+      delivery: 'Branch delivery · Check local availability',
+      ballastUrl: 'https://www.huwsgray.co.uk/aggregates-sand-cement/aggregates-gravel/ballast-100010234-0000',
+      cementUrl: 'https://www.huwsgray.co.uk/aggregates-sand-cement/cement-limes-10290-0000',
+      branchUrl: 'https://www.huwsgray.co.uk/branch-locator',
+      color: '#b5152b',
+      nationwide: false
+    },
+    {
+      name: 'MKM Building Supplies',
+      desc: '125+ branches across the UK. Free local delivery, national delivery 7–14 days.',
+      stocks: ['Tonbags', 'Cement pallets'],
+      delivery: 'Free local delivery · National 7–14 days',
+      ballastUrl: 'https://www.mkmbs.co.uk/search?q=ballast+bulk+bag',
+      cementUrl: 'https://www.mkmbs.co.uk/search?q=cement+pallet',
+      branchUrl: 'https://www.mkmbs.co.uk/branches',
+      color: '#e67e00',
+      nationwide: false
+    },
+    {
+      name: 'Buildbase',
+      desc: 'National builders merchant with local branches. Delivery on aggregates and cement.',
+      stocks: ['Tonbags', 'Cement pallets'],
+      delivery: 'Branch delivery · Check local availability',
+      ballastUrl: 'https://www.buildbase.co.uk/search?query=ballast+bulk+bag',
+      cementUrl: 'https://www.buildbase.co.uk/search?query=cement+pallet',
+      branchUrl: 'https://www.buildbase.co.uk/branches',
+      color: '#2e7d32',
+      nationwide: false
+    },
+    {
+      name: 'Wickes',
+      desc: 'National DIY and trade merchant. Home delivery on selected aggregates and cement.',
+      stocks: ['Cement bags', 'Selected aggregates'],
+      delivery: 'Home delivery available · Check postcode',
+      ballastUrl: 'https://www.wickes.co.uk/search?q=ballast',
+      cementUrl: 'https://www.wickes.co.uk/search?q=cement',
+      branchUrl: 'https://www.wickes.co.uk/store-finder',
+      color: '#006B3C',
+      nationwide: true
+    },
+    {
+      name: 'Nationwide Supplies',
+      desc: 'Online-only merchant (plumb.build). Nationwide mainland UK delivery on tonbags and cement.',
+      stocks: ['Tonbags', 'Cement bags'],
+      delivery: 'Mainland UK delivery · Crane offload kerbside',
+      ballastUrl: 'https://plumb.build/product/ballast-jumbo-bag-850kg/1123',
+      cementUrl: 'https://plumb.build/search?q=cement',
+      branchUrl: null,
+      color: '#7B1FA2',
+      nationwide: true
+    },
+    {
+      name: 'Buildershop Online',
+      desc: 'Specialist online aggregate supplier. Nationwide bulk bag delivery direct to site.',
+      stocks: ['Tonbags'],
+      delivery: 'Nationwide mainland UK · Crane offload delivery',
+      ballastUrl: 'https://www.buildershoponline.co.uk/20mm-Ballast-Bulk-Bag-Jumbo-Bag',
+      cementUrl: null,
+      branchUrl: null,
+      color: '#5D4037',
+      nationwide: true
+    },
+  ];
+
+  function isValidPostcode(pc) {
+    const clean = pc.replace(/\s/g, '').toUpperCase();
+    return /^[A-Z]{1,2}[0-9][0-9A-Z]?[0-9][A-Z]{2}$/.test(clean);
+  }
+
+  function formatPostcode(pc) {
+    const clean = pc.replace(/\s/g, '').toUpperCase();
+    return clean.length > 4 ? clean.slice(0, -3) + ' ' + clean.slice(-3) : clean;
+  }
+
+  function supplierCard(s, postcode) {
+    const encoded = encodeURIComponent(postcode);
+    const checkUrl = s.branchUrl
+      ? `${s.branchUrl}?postcode=${encoded}`
+      : s.ballastUrl;
+
+    const stockPills = s.stocks.map(st =>
+      `<span style="background:${s.color}22;color:${s.color};font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;border:1px solid ${s.color}44;">${st}</span>`
+    ).join(' ');
+
+    const links = [];
+    if (s.ballastUrl) links.push(`<a href="${s.ballastUrl}" target="_blank" style="color:${s.color};font-family:'IBM Plex Mono',monospace;font-size:11px;text-decoration:none;">Ballast →</a>`);
+    if (s.cementUrl) links.push(`<a href="${s.cementUrl}" target="_blank" style="color:${s.color};font-family:'IBM Plex Mono',monospace;font-size:11px;text-decoration:none;">Cement →</a>`);
+    if (s.branchUrl) links.push(`<a href="${checkUrl}" target="_blank" style="color:${s.color};font-family:'IBM Plex Mono',monospace;font-size:11px;text-decoration:none;">Find branch →</a>`);
+
+    return `
+      <div style="background:var(--card);border:1px solid ${s.color}55;border-left:3px solid ${s.color};border-radius:8px;padding:14px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">${s.name}</div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5;">${s.desc}</div>
+        <div style="margin-bottom:8px;display:flex;gap:4px;flex-wrap:wrap;">${stockPills}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#555;margin-bottom:10px;">🚚 ${s.delivery}</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">${links.join('')}</div>
+      </div>`;
+  }
+
+  function findSuppliers() {
+    const raw = document.getElementById('postcodeInput').value.trim();
+    const errEl = document.getElementById('postcodeError');
+    const resultsEl = document.getElementById('supplierResults');
+
+    if (!isValidPostcode(raw)) {
+      errEl.style.display = 'block';
+      resultsEl.style.display = 'none';
+      return;
+    }
+
+    errEl.style.display = 'none';
+    const postcode = formatPostcode(raw);
+
+    const nationwide = nationwideSuppliers.filter(s => s.nationwide);
+    const branch = nationwideSuppliers.filter(s => !s.nationwide);
+
+    document.getElementById('nationwideCards').innerHTML = nationwide.map(s => supplierCard(s, postcode)).join('');
+    document.getElementById('branchCards').innerHTML = branch.map(s => supplierCard(s, postcode)).join('');
+    resultsEl.style.display = 'block';
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  const mixes = {
+    general:    { name: 'C20 General (1:6)',       cement: 1, sand: 2,   agg: 4,   ballast: 0, type: 'separate' },
+    structural: { name: 'C25 Structural (1:4)',   cement: 1, sand: 1,   agg: 3,   ballast: 0, type: 'separate' },
+    ballast:    { name: 'Ballast Mix (1:5)',        cement: 1, sand: 0,   agg: 0,   ballast: 5, type: 'ballast'  },
+    lean:       { name: 'C10 Lean (1:9)',           cement: 1, sand: 3,   agg: 6,   ballast: 0, type: 'separate' },
+    custom:     { name: 'Custom Mix',               cement: 1, sand: 0,   agg: 0,   ballast: 6, type: 'ballast'  },
+  };
+
+  let currentMix = 'general';
+  let currentUnit = 'm';
+  let vatMode = 'inc';
+  const VAT_RATE = 0.20;
+
+  function setVat(mode, el) {
+    document.querySelectorAll('#vatExBtn, #vatIncBtn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    vatMode = mode;
+    document.getElementById('vatLabel').textContent = mode === 'inc' ? 'inc. VAT' : 'ex. VAT';
+    document.getElementById('vatNote').textContent = mode === 'inc' ? 'VAT @ 20% included' : 'VAT not included — add 20% if applicable';
+    document.getElementById('priceNoteVat').textContent = mode === 'inc' ? 'inc. VAT @ 20%' : 'ex. VAT';
+    calculate();
+  }
+
+  function selectMix(el) {
+    document.querySelectorAll('.mix-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    currentMix = el.dataset.mix;
+    const box = document.getElementById('customRatioBox');
+    if (currentMix === 'custom') {
+      box.classList.add('visible');
+      updateCustomRatio();
+    } else {
+      box.classList.remove('visible');
+    }
+    calculate();
+  }
+
+  function updateCustomRatio() {
+    const val = parseFloat(document.getElementById('customBallast').value);
+    document.getElementById('customBallastVal').textContent = val;
+    mixes.custom.ballast = val;
+    mixes.custom.name = `Custom Mix (1:${val})`;
+    let hint = '';
+    if (val <= 3.5)       hint = 'Very strong — structural use';
+    else if (val <= 5)    hint = 'approx C25 strength';
+    else if (val <= 6.5)  hint = 'approx C20 strength';
+    else if (val <= 8)    hint = 'approx C15 strength';
+    else                  hint = 'Lean mix — blinding/fill only';
+    document.getElementById('crPreview').textContent = `Mix: 1 : ${val} ballast — ${hint}`;
+    calculate();
+  }
+
+  function setUnit(u, el) {
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    currentUnit = u;
+    document.querySelectorAll('.pour-unit').forEach(span => span.textContent = u);
+    calculate();
+  }
+
+  function toMetres(val) {
+    if (currentUnit === 'mm') return val / 1000;
+    if (currentUnit === 'ft') return val * 0.3048;
+    if (currentUnit === 'in') return val * 0.0254;
+    return val;
+  }
+
+  function updateWaste() {
+    const w = parseInt(document.getElementById('wasteSlider').value);
+    document.getElementById('wasteVal').textContent = w;
+    let hint = '';
+    if (w === 0)       hint = '0% — no allowance, exact volume only';
+    else if (w <= 5)   hint = w + '% — typical for small straightforward pours';
+    else if (w <= 10)  hint = w + '% — recommended for most jobs';
+    else if (w <= 15)  hint = w + '% — good for complex or irregular shapes';
+    else               hint = w + '% — high allowance, use for large or tricky pours';
+    document.getElementById('wasteHint').textContent = hint;
+    calculate();
+  }
+
+  // Pricing constants — mid-point used for comparison
+  const BALLAST_TONBAG_MID = 55.00;  // mid of £45–£65
+  const BALLAST_20KG_MID   = 3.75;   // mid of £3.00–£4.50
+  const BALLAST_LOW = 45.00, BALLAST_HIGH = 65.00;
+  const BALLAST_20KG_LOW = 3.00, BALLAST_20KG_HIGH = 4.50;
+
+  // For a given kg, returns the most economical split of tonbags + 20kg bags
+  // Compares: (wholeTonbags + remainder in 20kg bags) vs (wholeTonbags+1 tonbag)
+  function ballastSplit(kg) {
+    const wholeTonbags = Math.floor(kg / 850);
+    const remainderKg = kg - (wholeTonbags * 850);
+    const remainder20kg = Math.ceil(remainderKg / 20);
+
+    // Cost of whole tonbags + remainder in 20kg bags
+    const costBags = (wholeTonbags * BALLAST_TONBAG_MID) + (remainder20kg * BALLAST_20KG_MID);
+    // Cost of rounding up to next full tonbag
+    const costTonbag = (wholeTonbags + (remainderKg > 0 ? 1 : 0)) * BALLAST_TONBAG_MID;
+    // Cost of all 20kg bags
+    const totalBags20kg = Math.ceil(kg / 20);
+    const costAllBags = totalBags20kg * BALLAST_20KG_MID;
+
+    let useRemainder20kg = false;
+    let useAllBags = false;
+
+    if (wholeTonbags === 0) {
+      // No full tonbag — compare all bags vs 1 tonbag
+      useAllBags = costAllBags <= BALLAST_TONBAG_MID;
+    } else if (remainderKg > 0) {
+      // Compare: whole tonbags + bags vs rounding up to next tonbag
+      useRemainder20kg = costBags <= costTonbag;
+    }
+
+    return { wholeTonbags, remainderKg, remainder20kg, useRemainder20kg, useAllBags, totalBags20kg, costBags, costTonbag, costAllBags };
+  }
+
+  function ballastCardHtml(name, kg) {
+    const { wholeTonbags, remainderKg, remainder20kg, useRemainder20kg, useAllBags, totalBags20kg } = ballastSplit(kg);
+    const totalTonbags = Math.ceil(kg / 850);
+
+    if (wholeTonbags === 0) {
+      if (useAllBags) {
+        return `
+          <div class="mat-card ballast">
+            <div class="mat-name">${name}</div>
+            <div class="mat-primary">${totalBags20kg}<span> × 20kg bags</span></div>
+            <div class="mat-secondary">${Math.round(kg)} kg total</div>
+            <div class="mat-secondary" style="margin-top:4px;">or <strong>1 tonbag</strong> if buying in bulk</div>
+            <div class="mat-note">20kg bags more economical than a tonbag for this quantity</div>
+          </div>`;
+      } else {
+        return `
+          <div class="mat-card ballast">
+            <div class="mat-name">${name}</div>
+            <div class="mat-primary">1<span> tonbag</span></div>
+            <div class="mat-secondary">${Math.round(kg)} kg required · tonbag more economical</div>
+            <div class="mat-secondary" style="margin-top:4px;">or ${totalBags20kg} × 20kg bags</div>
+            <div class="mat-note">~850kg per tonbag usable weight</div>
+          </div>`;
+      }
+    } else if (remainderKg > 0 && useRemainder20kg) {
+      return `
+        <div class="mat-card ballast">
+          <div class="mat-name">${name}</div>
+          <div class="mat-primary">${wholeTonbags}<span> tonbag${wholeTonbags !== 1 ? 's' : ''}</span></div>
+          <div class="mat-secondary" style="font-size:15px;font-weight:500;color:var(--cement);margin-top:6px;">+ ${remainder20kg} × 20kg bags</div>
+          <div class="mat-secondary" style="margin-top:4px;">or <strong>${totalTonbags} tonbag${totalTonbags !== 1 ? 's' : ''}</strong> if buying tonbags only</div>
+          <div class="mat-note">${Math.round(remainderKg)} kg remainder · ${Math.round(kg)} kg total · most economical split</div>
+        </div>`;
+    } else {
+      return `
+        <div class="mat-card ballast">
+          <div class="mat-name">${name}</div>
+          <div class="mat-primary">${totalTonbags}<span> tonbag${totalTonbags !== 1 ? 's' : ''}</span></div>
+          <div class="mat-secondary">${Math.round(kg)} kg total · or ${totalBags20kg} × 20kg bags</div>
+          <div class="mat-note">~850kg per tonbag usable weight</div>
+        </div>`;
+    }
+  }
+
+  function ballastPriceRow(kg, vatFactor) {
+    const { wholeTonbags, remainderKg, remainder20kg, useRemainder20kg, useAllBags, totalBags20kg } = ballastSplit(kg);
+    const BL = 45.00 * vatFactor, BH = 65.00 * vatFactor;
+    const B2L = 3.00 * vatFactor, B2H = 4.50 * vatFactor;
+    let low = 0, high = 0, html = '';
+
+    if (wholeTonbags === 0) {
+      if (useAllBags) {
+        low = totalBags20kg * B2L; high = totalBags20kg * B2H;
+        html = `<div class="price-row">
+          <div class="pr-dot ballast"></div>
+          <div class="pr-name">Ballast (${totalBags20kg} × 20kg bags)</div>
+          <div class="pr-qty">@ £${B2L.toFixed(2)}–£${B2H.toFixed(2)}/bag</div>
+          <div class="pr-price">£${Math.round(low)}–£${Math.round(high)}</div>
+        </div>`;
+      } else {
+        low = BL; high = BH;
+        html = `<div class="price-row">
+          <div class="pr-dot ballast"></div>
+          <div class="pr-name">Ballast (1 tonbag)</div>
+          <div class="pr-qty">@ £${BL.toFixed(2)}–£${BH.toFixed(2)}/tonbag</div>
+          <div class="pr-price">£${Math.round(low)}–£${Math.round(high)}</div>
+        </div>`;
+      }
+    } else if (remainderKg > 0 && useRemainder20kg) {
+      const tLow = wholeTonbags * BL, tHigh = wholeTonbags * BH;
+      const bLow = remainder20kg * B2L, bHigh = remainder20kg * B2H;
+      low = tLow + bLow; high = tHigh + bHigh;
+      html = `<div class="price-row">
+        <div class="pr-dot ballast"></div>
+        <div class="pr-name">Ballast (${wholeTonbags} tonbag${wholeTonbags !== 1 ? 's' : ''} + ${remainder20kg} × 20kg bags)</div>
+        <div class="pr-qty">@ £${BL.toFixed(2)}/tonbag + £${B2L.toFixed(2)}/bag</div>
+        <div class="pr-price">£${Math.round(low)}–£${Math.round(high)}</div>
+      </div>`;
+    } else {
+      const totalTonbags = Math.ceil(kg / 850);
+      low = totalTonbags * BL; high = totalTonbags * BH;
+      html = `<div class="price-row">
+        <div class="pr-dot ballast"></div>
+        <div class="pr-name">Ballast (${totalTonbags} tonbag${totalTonbags !== 1 ? 's' : ''})</div>
+        <div class="pr-qty">@ £${BL.toFixed(2)}–£${BH.toFixed(2)}/tonbag</div>
+        <div class="pr-price">£${Math.round(low)}–£${Math.round(high)}</div>
+      </div>`;
+    }
+    return { low, high, html };
+  }
+
+  // --- MULTIPLE POURS ---
+  let pourCount = 0;
+
+  function addPour(label) {
+    pourCount++;
+    const id = pourCount;
+    const container = document.getElementById('poursContainer');
+    const div = document.createElement('div');
+    div.className = 'pour-row';
+    div.id = 'pour-' + id;
+    div.style.cssText = 'background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:10px;';
+    div.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <input class="pour-label-input" value="${label || 'Pour ' + id}" placeholder="Label (e.g. Shed base)"
+          style="background:transparent;border:none;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;outline:none;width:60%;"
+          oninput="calculate()" />
+        ${id > 1 ? `<button onclick="removePour(${id})" style="background:none;border:none;color:#555;font-size:16px;cursor:pointer;padding:0 4px;line-height:1;" title="Remove">✕</button>` : ''}
+      </div>
+      <div class="inputs-grid">
+        <div class="input-group">
+          <label>Length</label>
+          <div class="input-wrap">
+            <input type="number" class="pour-l" placeholder="0.00" min="0" step="0.01" oninput="calculate()" />
+            <span class="pour-unit unit">${currentUnit}</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Width</label>
+          <div class="input-wrap">
+            <input type="number" class="pour-w" placeholder="0.00" min="0" step="0.01" oninput="calculate()" />
+            <span class="pour-unit unit">${currentUnit}</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Depth</label>
+          <div class="input-wrap">
+            <input type="number" class="pour-d" placeholder="0.00" min="0" step="0.01" oninput="calculate()" />
+            <span class="pour-unit unit">${currentUnit}</span>
+          </div>
+        </div>
+      </div>`;
+    container.appendChild(div);
+  }
+
+  function removePour(id) {
+    const el = document.getElementById('pour-' + id);
+    if (el) el.remove();
+    calculate();
+  }
+
+  // Initialise with one pour on load
+  document.addEventListener('DOMContentLoaded', function() {
+    addPour('Pour 1');
+  });
+  // --- END MULTIPLE POURS ---
+
+  function calculate() {
+    // Collect all pours
+    const pourRows = document.querySelectorAll('.pour-row');
+    let totalVol = 0;
+    const pourVols = [];
+    let hasAnyValid = false;
+
+    pourRows.forEach((row, i) => {
+      const l = parseFloat(row.querySelector('.pour-l').value) || 0;
+      const w = parseFloat(row.querySelector('.pour-w').value) || 0;
+      const d = parseFloat(row.querySelector('.pour-d').value) || 0;
+      const vol = (l > 0 && w > 0 && d > 0) ? toMetres(l) * toMetres(w) * toMetres(d) : 0;
+      pourVols.push({ l, w, d, vol, index: i + 1 });
+      totalVol += vol;
+      if (vol > 0) hasAnyValid = true;
+    });
+
+    if (!hasAnyValid) {
+      document.getElementById('results').classList.remove('visible');
+      return;
+    }
+
+    const wastePct = parseInt(document.getElementById('wasteSlider').value) / 100;
+    document.getElementById('wastePct').textContent = parseInt(document.getElementById('wasteSlider').value);
+    document.getElementById('wasteNotePct').textContent = parseInt(document.getElementById('wasteSlider').value);
+
+    const vol = totalVol;
+    const volWaste = vol * (1 + wastePct);
+
+    const mix = mixes[currentMix];
+    const totalParts = mix.type === 'ballast'
+      ? mix.cement + mix.ballast
+      : mix.cement + mix.sand + mix.agg;
+
+    // Wet concrete density ~2400 kg/m³, dry materials ~2300 kg/m³
+    // We use dry volume factor of 1.54 to account for compaction
+    const dryVol = volWaste * 1.54;
+
+    const cementPart = dryVol * (mix.cement / totalParts);
+    // Cement density ~1440 kg/m³
+    const cementKg = cementPart * 1440;
+    const cementBags = Math.ceil(cementKg / 25);
+
+    let cards = '';
+
+    // Cement card
+    cards += `
+      <div class="mat-card cement">
+        <div class="mat-name">Cement</div>
+        <div class="mat-primary">${cementBags}<span> bags</span></div>
+        <div class="mat-secondary">${Math.round(cementKg)} kg total</div>
+        <div class="mat-note">25kg bags · standard Portland</div>
+      </div>`;
+
+    if (mix.type === 'ballast') {
+      const ballastPart = dryVol * (mix.ballast / totalParts);
+      const ballastKg = ballastPart * 1750;
+      cards += ballastCardHtml('Ballast (mixed aggregate)', ballastKg);
+
+    } else {
+      const sandPart = dryVol * (mix.sand / totalParts);
+      const sandKg = sandPart * 1600;
+      const aggPart = dryVol * (mix.agg / totalParts);
+      const aggKg = aggPart * 1650;
+      const combinedKg = sandKg + aggKg;
+      cards += ballastCardHtml('Ballast (sharp sand &amp; gravel mixed)', combinedKg);
+    }
+
+    // Water estimate (w/c ratio ~0.5)
+    const waterL = Math.round(cementKg * 0.5);
+    cards += `
+      <div class="mat-card water">
+        <div class="mat-name">Water (approx)</div>
+        <div class="mat-primary">${waterL}<span> litres</span></div>
+        <div class="mat-secondary">w/c ratio 0.5 · adjust on site</div>
+        <div class="mat-note">Add gradually — don't over-water</div>
+      </div>`;
+
+    document.getElementById('volNum').textContent = vol.toFixed(3);
+    document.getElementById('volWaste').textContent = volWaste.toFixed(3) + ' m³';
+    document.getElementById('volMix').textContent = mix.name;
+    document.getElementById('volLabel').textContent = pourVols.filter(p => p.vol > 0).length > 1 ? 'Combined Volume' : 'Total Volume';
+
+    // Pour breakdown
+    const validPours = pourVols.filter(p => p.vol > 0);
+    const breakdownEl = document.getElementById('pourBreakdown');
+    const rowsEl = document.getElementById('pourBreakdownRows');
+    if (validPours.length > 1) {
+      breakdownEl.style.display = 'block';
+      rowsEl.innerHTML = validPours.map(p => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:12px;">
+          <span style="color:var(--muted);">Pour ${p.index} &nbsp;${p.l} × ${p.w} × ${p.d} ${currentUnit}</span>
+          <span style="color:var(--text);font-weight:500;">${p.vol.toFixed(3)} m³</span>
+        </div>`).join('') + `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;">
+          <span style="color:var(--yellow);">Combined total</span>
+          <span style="color:var(--yellow);font-weight:500;">${vol.toFixed(3)} m³</span>
+        </div>`;
+    } else {
+      breakdownEl.style.display = 'none';
+    }
+
+    // Extra conversions
+    const litres = Math.round(vol * 1000);
+    document.getElementById('volExtra').textContent = `(${litres} litres)`;
+
+    document.getElementById('materialsGrid').innerHTML = cards;
+
+    const vatFactor = vatMode === 'ex' ? 1 / (1 + VAT_RATE) : 1;
+    const CEMENT_LOW = 6.50 * vatFactor, CEMENT_HIGH = 8.00 * vatFactor;
+
+    let priceLow = 0, priceHigh = 0;
+    let priceRowsHtml = '';
+
+    // Cement cost
+    const cementLow = cementBags * CEMENT_LOW;
+    const cementHigh = cementBags * CEMENT_HIGH;
+    priceLow += cementLow;
+    priceHigh += cementHigh;
+    priceRowsHtml += `
+      <div class="price-row">
+        <div class="pr-dot cement"></div>
+        <div class="pr-name">Cement (${cementBags} × 25kg bags)</div>
+        <div class="pr-qty">@ £${CEMENT_LOW.toFixed(2)}–£${CEMENT_HIGH.toFixed(2)}/bag</div>
+        <div class="pr-price">£${Math.round(cementLow)}–£${Math.round(cementHigh)}</div>
+      </div>`;
+
+    if (mix.type === 'ballast') {
+      const ballastPart2 = dryVol * (mix.ballast / totalParts);
+      const ballastKg2 = ballastPart2 * 1750;
+      const bp = ballastPriceRow(ballastKg2, vatFactor);
+      priceLow += bp.low; priceHigh += bp.high;
+      priceRowsHtml += bp.html;
+    } else {
+      const sandPart2 = dryVol * (mix.sand / totalParts);
+      const sandKg2 = sandPart2 * 1600;
+      const aggPart2 = dryVol * (mix.agg / totalParts);
+      const aggKg2 = aggPart2 * 1650;
+      const combinedKg2 = sandKg2 + aggKg2;
+      const bp2 = ballastPriceRow(combinedKg2, vatFactor);
+      priceLow += bp2.low; priceHigh += bp2.high;
+      priceRowsHtml += bp2.html;
+    }
+
+    const priceMid = Math.round((priceLow + priceHigh) / 2);
+    document.getElementById('ptNum').textContent = '£' + priceMid;
+    document.getElementById('ptLow').textContent = '£' + Math.round(priceLow);
+    document.getElementById('ptHigh').textContent = '£' + Math.round(priceHigh);
+    document.getElementById('priceRows').innerHTML = priceRowsHtml;
+    // --- END PRICING ---
+
+    document.getElementById('results').classList.add('visible');
+  }
+  // --- COOKIE CONSENT (PECR compliant) ---
+  const COOKIE_KEY = 'cc_prefs_v1';
+
+  function cookieGetPrefs() {
+    try { return JSON.parse(localStorage.getItem(COOKIE_KEY)); } catch(e) { return null; }
+  }
+
+  function cookieSavePrefsToStorage(analytics, ads) {
+    localStorage.setItem(COOKIE_KEY, JSON.stringify({
+      analytics, ads, timestamp: Date.now()
+    }));
+  }
+
+  function cookieHideBanner() {
+    document.getElementById('cookieBanner').classList.remove('visible');
+    document.getElementById('cookieSettingsLink').classList.add('visible');
+  }
+
+  function cookieShowBanner() {
+    const prefs = cookieGetPrefs();
+    if (prefs) {
+      document.getElementById('toggleAnalytics').checked = prefs.analytics;
+      document.getElementById('toggleAds').checked = prefs.ads;
+    }
+    document.getElementById('cookieBanner').classList.add('visible');
+    document.getElementById('cookieSettingsLink').classList.remove('visible');
+  }
+
+  function cookieAcceptAll() {
+    cookieSavePrefsToStorage(true, true);
+    cookieHideBanner();
+    cookieApply(true, true);
+  }
+
+  function cookieRejectAll() {
+    cookieSavePrefsToStorage(false, false);
+    cookieHideBanner();
+    cookieApply(false, false);
+  }
+
+  function cookieSavePrefs() {
+    const analytics = document.getElementById('toggleAnalytics').checked;
+    const ads = document.getElementById('toggleAds').checked;
+    cookieSavePrefsToStorage(analytics, ads);
+    cookieHideBanner();
+    cookieApply(analytics, ads);
+  }
+
+  function cookieApply(analytics, ads) {
+    if (analytics && typeof gtag === 'undefined') {
+      const s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
+      s.async = true;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){ dataLayer.push(arguments); };
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID', { anonymize_ip: true });
+    }
+    if (ads && !document.getElementById('adsense-script')) {
+      const a = document.createElement('script');
+      a.id = 'adsense-script';
+      a.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      a.async = true;
+      a.setAttribute('data-ad-client', 'ca-pub-3535876302289611');
+      document.head.appendChild(a);
+    }
+  }
+
+  // --- FAQ ---
+  const faqs = [
+    {
+      q: 'How much ballast do I need for a shed base?',
+      a: 'For a typical shed base using a 1:6 mix (C20 General), multiply the length × width × depth in metres to get your volume, then use this calculator to get the exact ballast and cement quantities. As a rough guide, a 3m × 2m shed base at 100mm depth needs around 0.6m³ of concrete — approximately 1 tonbag of ballast and 4–5 bags of cement.'
+    },
+    {
+      q: 'What is the difference between a tonbag and 20kg bags of ballast?',
+      a: 'A tonbag (also called a bulk bag or jumbo bag) contains approximately 850kg of usable ballast and costs around £45–£65 from a builders merchant, making it far more economical for larger pours. Individual 20kg bags cost around £3.00–£4.50 each, which works out cheaper only for small quantities where buying a full tonbag would leave significant waste. This calculator automatically recommends the most economical option based on your required quantity.'
+    },
+    {
+      q: 'What mix ratio do I need for a garden path?',
+      a: 'A 1:6 mix (C20 General) is ideal for garden paths — 1 part cement to 6 parts ballast. This gives a good general-purpose concrete suitable for pedestrian use. For paths that will take vehicle weight, step up to a 1:5 mix. Always aim for a depth of at least 75–100mm for paths, laid on a compacted sub-base.'
+    },
+    {
+      q: 'What mix ratio do I need for foundations?',
+      a: 'For most domestic strip foundations in the UK, a 1:4 mix (C25 Structural) is the standard recommendation. This provides sufficient strength for typical residential loads. For larger or load-bearing structures, always consult a structural engineer who can specify the correct mix grade to Building Regulations requirements.'
+    },
+    {
+      q: 'How deep should a concrete shed base be?',
+      a: 'A minimum of 100mm (4 inches) is recommended for a shed base, laid on at least 75mm of compacted hardcore or MOT Type 1 sub-base. For larger or heavier sheds, or on clay or soft ground, increase to 150mm. A 1:6 ballast mix is perfectly adequate for shed bases.'
+    },
+    {
+      q: 'How thick should a concrete driveway be?',
+      a: 'For private cars, a minimum of 100mm is required — 150mm is strongly recommended. For vans or heavier vehicles, increase to 150–175mm. Use a 1:5 ballast mix or C25 mix for driveways. Always lay on a compacted sub-base to prevent movement and cracking.'
+    },
+    {
+      q: 'How much does concrete cost per m³ in the UK?',
+      a: 'Ready-mix delivered concrete typically costs £90–£165 per m³ in the UK (2026), depending on grade, location, and delivery charges. Mixing your own from ballast and cement works out at approximately £60–£120 per m³ in materials, but requires more labour. This calculator shows the material cost breakdown for hand-mixed concrete based on current builders merchant prices.'
+    },
+    {
+      q: 'How long does concrete take to set?',
+      a: 'Concrete typically takes 24–48 hours to be walked on, and around 7 days to reach sufficient strength for light use. Full curing takes approximately 28 days. In cold weather (below 5°C) concrete sets much more slowly and may need protecting from frost. Never pour concrete if temperatures are likely to drop below freezing overnight.'
+    },
+    {
+      q: 'What is the difference between cement and concrete?',
+      a: 'Cement is an ingredient — it\'s the grey powder (usually Portland cement) sold in 25kg bags. Concrete is the finished material made by mixing cement with ballast (sand and gravel aggregate) and water. A typical 1:6 mix uses 1 part cement to 6 parts ballast by weight. You cannot pour cement alone — it must be combined with aggregate to make concrete.'
+    },
+    {
+      q: 'Can I use this calculator for ready-mix concrete orders?',
+      a: 'Yes — the volume calculation is the same regardless of whether you\'re hand-mixing or ordering ready-mix. Use the m³ figure shown in the results to tell your ready-mix supplier how much you need. Always add 5–10% for waste. Minimum ready-mix orders in the UK are typically 3–6m³, so this calculator is most useful for hand-mixed jobs or checking whether your project is large enough to warrant a ready-mix delivery.'
+    },
+  ];
+
+  function buildFaq() {
+    const container = document.getElementById('faqList');
+    if (!container) return;
+    container.innerHTML = faqs.map((f, i) => `
+      <div class="faq-item" id="faq-${i}">
+        <button class="faq-question" onclick="toggleFaq(${i})" aria-expanded="false">
+          <span>${f.q}</span>
+          <span class="faq-chevron">⌄</span>
+        </button>
+        <div class="faq-answer">${f.a}</div>
+      </div>
+    `).join('');
+  }
+
+  function toggleFaq(i) {
+    const item = document.getElementById('faq-' + i);
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', buildFaq);
+  // --- END FAQ ---
+
+  // --- SHARE / COPY RESULTS ---
+  function buildResultsText() {
+    const vol = document.getElementById('volNum').textContent;
+    const volWaste = document.getElementById('volWaste').textContent;
+    const mix = document.getElementById('volMix').textContent;
+    const waste = document.getElementById('wastePct').textContent;
+
+    let text = `CONCRETE CALCULATOR RESULTS\n`;
+    text += `concretecalculatoruk.co.uk\n`;
+    text += `─────────────────────────\n`;
+    text += `Volume: ${vol} m³ (with ${waste}% waste: ${volWaste})\n`;
+    text += `Mix: ${mix}\n`;
+    text += `─────────────────────────\n`;
+    text += `MATERIALS REQUIRED\n`;
+
+    // Grab material cards
+    const cards = document.querySelectorAll('#materialsGrid .mat-card');
+    cards.forEach(card => {
+      const name = card.querySelector('.mat-name')?.textContent?.trim() || '';
+      const primary = card.querySelector('.mat-primary')?.textContent?.trim() || '';
+      const secondary = card.querySelector('.mat-secondary')?.textContent?.trim() || '';
+      text += `\n${name}\n  ${primary}\n  ${secondary}\n`;
+    });
+
+    // Pricing
+    const total = document.getElementById('ptNum')?.textContent;
+    const low = document.getElementById('ptLow')?.textContent;
+    const high = document.getElementById('ptHigh')?.textContent;
+    const vatLabel = document.getElementById('vatLabel')?.textContent;
+    if (total) {
+      text += `\n─────────────────────────\n`;
+      text += `ESTIMATED COST (${vatLabel})\n`;
+      text += `Mid estimate: ${total}\n`;
+      text += `Range: ${low} – ${high}\n`;
+    }
+
+    text += `\n─────────────────────────\n`;
+    text += `Prices based on UK builders merchant rates (March 2026).\n`;
+    text += `Always get a quote before ordering.`;
+    return text;
+  }
+
+  function copyResults() {
+    const text = buildResultsText();
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const confirm = document.getElementById('copyConfirm');
+      btn.textContent = '✓ Copied!';
+      btn.style.borderColor = '#2a4a2a';
+      btn.style.color = '#7aba7a';
+      confirm.style.display = 'block';
+      setTimeout(() => {
+        btn.innerHTML = '📋 Copy Results';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+        confirm.style.display = 'none';
+      }, 3000);
+    }).catch(() => {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = buildResultsText();
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      document.getElementById('copyConfirm').style.display = 'block';
+      setTimeout(() => document.getElementById('copyConfirm').style.display = 'none', 3000);
+    });
+  }
+
+  function shareWhatsApp() {
+    const text = encodeURIComponent(buildResultsText());
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+  }
+
+  function shareNative() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Concrete Calculator Results',
+        text: buildResultsText(),
+        url: 'https://concretecalculatoruk.co.uk/'
+      }).catch(() => {});
+    } else {
+      // Fallback — copy if Web Share API not available
+      copyResults();
+    }
+  }
+  // --- END SHARE ---
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const prefs = cookieGetPrefs();
+    if (!prefs) {
+      document.getElementById('cookieBanner').classList.add('visible');
+    } else {
+      document.getElementById('cookieSettingsLink').classList.add('visible');
+      cookieApply(prefs.analytics, prefs.ads);
+    }
+  });
+  // --- END COOKIE CONSENT ---
+</script>
+
+<footer style="max-width:700px;margin:3rem auto 0;padding:2rem 1rem;border-top:1px solid #222;font-family:'JetBrains Mono',monospace;font-size:11px;color:#444;line-height:1.8;">
+  <div style="display:flex;flex-wrap:wrap;gap:2rem;margin-bottom:1.5rem;">
+    <div style="flex:1;min-width:180px;">
+      <div style="color:#888;font-size:12px;margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;">About</div>
+      <p style="color:#555;">This free concrete calculator was built to help UK homeowners, DIYers, and tradespeople quickly estimate materials for concrete pours. Quantities are based on standard UK mix ratios and typical builders merchant bag sizes.</p>
+    </div>
+    <div style="flex:1;min-width:180px;">
+      <div style="color:#888;font-size:12px;margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;">How to Use</div>
+      <p style="color:#555;">Select your mix type, enter your dimensions in metres, millimetres, feet, or inches, adjust the waste allowance, and click Calculate. Results include tonbag and 20kg bag quantities, estimated costs, and links to UK suppliers.</p>
+    </div>
+    <div style="flex:1;min-width:180px;">
+      <div style="color:#888;font-size:12px;margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;">Contact</div>
+      <p style="color:#555;">For enquiries, advertising, or supplier listing information:</p>
+      <a href="/cdn-cgi/l/email-protection#d4b7bbbab7a6b1a0b1b7b5b8b7a1b8b5a0bba6a1bf94b3b9b5bdb8fab7bbb9" style="color:#555;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:11px;" onmouseover="this.style.color='#F5C518'" onmouseout="this.style.color='#555'"><span class="__cf_email__" data-cfemail="8cefe3e2effee9f8e9efede0eff9e0edf8e3fef9e7ccebe1ede5e0a2efe3e1">[email&#160;protected]</span></a>
+    </div>
+      <ul style="color:#555;list-style:none;padding:0;">
+        <li><a href="/privacy-policy" style="color:#555;text-decoration:none;" onmouseover="this.style.color='#F5C518'" onmouseout="this.style.color='#555'">Privacy Policy</a></li>
+        <li><a href="/disclaimer" style="color:#555;text-decoration:none;" onmouseover="this.style.color='#F5C518'" onmouseout="this.style.color='#555'">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="border-top:1px solid #222;padding-top:1rem;display:flex;flex-wrap:wrap
