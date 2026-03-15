@@ -664,9 +664,9 @@
     #cookieBanner {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: #111;
-      border-top: 2px solid var(--yellow);
-      padding: 1.25rem 1.5rem;
+      background: #1a1200;
+      border-top: 2px solid #8B6E00;
+      padding: 0.75rem 1.5rem;
       z-index: 9999;
       display: none;
       font-family: 'IBM Plex Sans', sans-serif;
@@ -678,61 +678,63 @@
       max-width: 700px;
       margin: 0 auto;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: center;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .cookie-title {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      color: var(--yellow);
+      color: #C49D0E;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .cookie-text {
-      font-size: 13px;
-      color: #999;
-      line-height: 1.7;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.5;
+      flex: 1;
+      min-width: 200px;
     }
 
     .cookie-text a {
-      color: var(--yellow);
+      color: #C49D0E;
       text-decoration: none;
     }
 
     .cookie-toggles {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      flex-direction: row;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
     .cookie-toggle-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
+      background: #2a1f00;
+      border: 1px solid #3a2f00;
       border-radius: 6px;
-      padding: 10px 14px;
-      gap: 12px;
+      padding: 6px 10px;
+      gap: 8px;
     }
 
     .cookie-toggle-info { flex: 1; }
 
     .cookie-toggle-name {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
       color: var(--text);
     }
 
     .cookie-toggle-desc {
-      font-size: 11px;
-      color: #555;
-      margin-top: 2px;
+      display: none;
     }
 
     .cookie-required {
@@ -776,14 +778,14 @@
 
     .cookie-btns {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .cookie-btn {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      padding: 10px 20px;
+      font-size: 11px;
+      padding: 7px 14px;
       border-radius: 5px;
       cursor: pointer;
       border: 1px solid var(--border);
@@ -1996,7 +1998,7 @@
     <div style="flex:1;min-width:180px;">
       <div style="color:#888;font-size:12px;margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;">Contact</div>
       <p style="color:#555;">For enquiries, advertising, or supplier listing information:</p>
-      <a href="/cdn-cgi/l/email-protection#d4b7bbbab7a6b1a0b1b7b5b8b7a1b8b5a0bba6a1bf94b3b9b5bdb8fab7bbb9" style="color:#555;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:11px;" onmouseover="this.style.color='#F5C518'" onmouseout="this.style.color='#555'"><span class="__cf_email__" data-cfemail="8cefe3e2effee9f8e9efede0eff9e0edf8e3fef9e7ccebe1ede5e0a2efe3e1">[email&#160;protected]</span></a>
+      <a href="mailto:concretecalculatoruk@gmail.com" style="color:#555;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:11px;" onmouseover="this.style.color='#F5C518'" onmouseout="this.style.color='#555'">concretecalculatoruk@gmail.com</a>
     </div>
       <ul style="color:#555;list-style:none;padding:0;">
         <li><a href="/privacy-policy" style="color:#555;text-decoration:none;" onmouseover="this.style.color='#F5C518'" onmouseout="this.style.color='#555'">Privacy Policy</a></li>
